@@ -156,6 +156,24 @@ const Create = () => {
   /* =======================
      RENDER
   ======================= */
+  const generateTankOptions = () => {
+     const options = [];
+   
+     // TA - TF
+     for (let i = 65; i <= 70; i++) {
+       const tank = 'T' + String.fromCharCode(i);
+       options.push({ value: tank, label: tank });
+     }
+   
+     // J1 - J12 (kalau mau mulai J2, ganti 1 jadi 2)
+     for (let i = 2; i <= 11; i++) {
+       const tank = 'J' + i;
+       options.push({ value: tank, label: tank });
+     }
+
+  return options;
+  };
+
   return (
     <form onSubmit={handleSubmit(
       onSubmit,
@@ -185,28 +203,10 @@ const Create = () => {
               name="tank"
               control={control}
               width="30%"
-              options={[
-                { value: 'TA', label: 'TA' },
-                { value: 'TB', label: 'TB' },
-                { value: 'TC', label: 'TC' },
-                { value: 'TD', label: 'TD' },
-                { value: 'TE', label: 'TE' },
-                { value: 'TF', label: 'TF' },
-                { value: 'J2', label: 'J2' },
-                { value: 'J3', label: 'J3' },
-                { value: 'J4', label: 'J4' },
-                { value: 'J5', label: 'J5' },
-                { value: 'J6', label: 'J6' },
-                { value: 'J7', label: 'J7' },
-                { value: 'J8', label: 'J8' },
-                { value: 'J9', label: 'J9' },
-                { value: 'J10', label: 'J10' },
-                { value: 'J11', label: 'J11' },
-
-              ]}
+              options={generateTankOptions()}
             />
 
-            {['TA', 'TB', 'TC', 'TD', 'TE', 'TF'].includes(formValues.tank) && (
+            {formValues.tank?.startsWith('T') && (
               <MyTextField
                 label="Pengisian ke"
                 name="pengisian_ke"
