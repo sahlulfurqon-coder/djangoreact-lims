@@ -52,6 +52,51 @@ const Home = () => {
         ),
       },
       {
+        accessorKey: 'raw_material_type',
+        header: 'Raw Material Type',
+        size: 180,
+        Cell: ({ cell, row }) => {
+          if (row.original.type !== 'raw_material') return '-';
+
+          const value = cell.getValue();
+          if (!value) return '-';
+
+          // Tampilkan chip
+          return (
+            <Chip
+              label={value}
+              size="small"
+              color="secondary"
+              variant="outlined"
+            />
+          );
+        },
+      },
+      {
+        header: 'Raw Materials',
+        accessorFn: (row) => row.raw_materials || [],
+        Cell: ({ cell, row }) => {
+          if (row.original.type !== 'fatblend') return '-';
+
+          const materials = cell.getValue();
+          if (!materials.length) return '-';
+
+          return (
+            <Box>
+              {materials.map((rm, i) => (
+                <Chip
+                  key={i}
+                  label={`${rm.tank} (${rm.percentage}%)`}
+                  size="small"
+                  sx={{ mr: 0.5, mb: 0.5 }}
+                />
+              ))}
+            </Box>
+          );
+        },
+        size: 250,
+      },
+      {
         header: 'Tanggal',
         size: 160,
         accessorFn: (row) => {
